@@ -1,4 +1,3 @@
-
 **<h1 style="text-align: center;">Wechat_Mqtt</h1>**
 
 <div style="display: flex; justify-content: center;">
@@ -57,12 +56,25 @@
 
 ## **使用前准备**
 - window服务器
-- mqtt服务器（可以使用免费的mqtt服务器，但是发送图片会偏慢，自己有服务器的尽量自己搭建。）
+- [mqtt服务器（可以使用免费的mqtt服务器，但是发送图片会偏慢，自己有服务器的尽量自己搭建。）](https://www.lddgo.net/network/mqttlist)
 - 在window服务器安装 [微信版本：3.6.0.18下载传送门](https://geekfong.cn/?p=46)
 
 
 ## **使用教程**
-
+1. 打开config.json,修改为自己对应的mqtt服务器,账号密码没有可以不填。subscribetopic，之后客户端的消息都会发送到这个topic
+(免费mqtt服务器)[https://www.lddgo.net/network/mqttlist]
+```
+{
+    "broker": "broker-cn.emqx.io",
+    "port": 1883,
+    "user": "",
+    "pw": "",
+    "keepalive": 60,    
+    "subscribetopic": "/WeChatMqtt/Allmsg"
+}
+```
+2. 安装Wechat_Mqtt后打开程序
+3. 扫码登录自己微信即可使用
 
 
 ## **对接协议**
