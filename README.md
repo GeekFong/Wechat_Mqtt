@@ -55,9 +55,8 @@
 
 
 ## **使用前准备**
-- [图床]((https://imgbb.com/))
 - [mqtt服务器（可以使用免费的mqtt服务器，但是发送图片会偏慢，自己有服务器的尽量自己搭建。）](https://www.lddgo.net/network/mqttlist)
-- 在window服务器安装 [微信版本：3.6.0.18下载传送门](https://geekfong.cn/?p=46)
+- 在window电脑 [微信版本：3.6.0.18下载传送门](https://geekfong.cn/?p=46)
 
 
 ## **使用教程**
