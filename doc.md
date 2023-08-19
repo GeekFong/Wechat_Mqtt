@@ -1,5 +1,4 @@
 **<h1 style="text-align: center;">Wechat_Mqtt_Doc</h1>**
-
 <br>
 
 <div style="display: flex; justify-content: center;">
@@ -30,24 +29,35 @@
 
 </div>
 
+
+# **目录**
+
+[1. 协议简单介绍](#协议简单介绍)
+
+[2. 设备mqtt发送数据给微信](#设备mqtt发送数据给微信)
+
+[3. 微信发送数据到其他地方](#微信发送数据到其他地方)
+
+[4. 测试数据包](#测试数据包)
+
+
+
+# **协议简单介绍**
+![Wechat_Mqtt](./image/Wechat_Mqtt.png)
+
+这是整个程序的设计示意图,mqtt发送端B发送消息后，根据协议默认绑定的就是(wx_account)对应的微信好友B，所以微信好友回复消息时。默认发送的数据也是发送到mqtt发送端B。微信好友如果想发送消息给mqtt发送端C，要提前知道c的mqtt_id.然后再根据协议发送数据。mqtt发送端b如果发送数据给微信好友C,那么微信好友C就默认和mqtt发送端b绑定在一起。微信好友B就会变成没有绑定关系。
+
+因此必须先由mqtt发送端先发起。后续才能正常的交互。
+
 <br>
 
-
-[设备mqtt发送数据给微信](##微信发送数据到mqtt)
-[微信发送数据到mqtt](##微信发送数据到mqtt)
-[测试数据包](##测试数据包)
-
-首次使用必须是由 设备mqtt发送数据给微信，让后台记录下mqtt_id和mqtt_id_name。如果不这样做的话，微信当方面向设备端发送时，设备端会接受不到数据
-
-## 设备mqtt发送数据给微信
+# **设备mqtt发送数据给微信**
 消息流程如下：
 设备mqtt发送数据 -> mqtt接受端接收到json数据包 -> 服务端微信（就是使用该软件的微信A）根据wx_account或者nick_name发送到对应的微信号
 
 ```json
 {
     "mqtt_id": "自定义", // 微信返回数据是根据这个字符串
-    "mqtt_id_name": "自定义", // 设备名，数据的返回和是通过mqtt_id_name找到mqtt_id，客户端订阅mqtt_id才能接受到数据
-    "mqtt_id_name_bindMe": "自定义", // 如果设置了该值，则默认 服务端微信--就是绑定一个客户端--可以用于快速发送信息，默认绑定的用户是wx_account。只有此人能够使用快速发送模式
     "wx_account": "", //微信账号
     "nick_name": "", // 微信昵称，自己微信改的名字
     "remark": "", // 发送微信备注的名字，可用此名字作为群发条件
@@ -64,56 +74,73 @@
 }
 ```
 
-
-
-| 字段名          | 值                           | 说明                                                   |   是否需要填    |
-|----------------|----------------------------|-------------------------------------------------------|-------------------|
-| mqtt_id        | 自定义                    | 接受数据的topic使用这个地址才能获取返回数据                                  |    必填        |
-| mqtt_id_name        | 自定义                    | 程序是通过mqtt_id_name找到mqtt_id进行发送                    |    必填        |
-| wx_account       |  自己微信上的账号        | 微信账号 |      必填  （wx_account和nick_name）二选一      |
-| nick_name      | 自己微信上的名字               | 微信昵称，自己微信改的名字                              |必填  （wx_account和nick_name）二选一        |
-| remark         | 做转发的微信备注               | 发送微信备注的名字，可用此名字作为群发条件              |  选填
-| timestamp      | 16565655                   | 时间戳                                                 |  必填
-| talk.type      | 1                          | 发送数据的类型：1, 2, 3                                 |  必填
-| talk.msg       | test                       | 发送的内容                                             |  根据参数选填
-| talk.card_title | Hello_Wechat              | 卡片式内容的简短名字                                    |  根据参数选填
-| talk.card_desc  | Hello                      | 卡片式内容的简单描述                                    | 根据参数选填
-| talk.card_image_url | www.baidu.com         | 卡片式内容的图片地址（确保是正确的URL）                |    根据参数选填
-| talk.card_link_url  | www.baidu.com         | 卡片式内容的跳转地址（确保是正确的URL）                |   根据参数选填
-| type4Picname  | 图片名字        | 卡片式内容的跳转地址（确保是正确的URL）                |               根据参数选填
-
+| 字段名             | 值                        | 说明                                                 | 是否需要填 |
+|------------------|-------------------------|-------------------------------------------------------|------------|
+| mqtt_id          | 自定义                   | 接受数据的topic使用这个地址才能获取返回数据           | 必填       |
+| wx_account       | 自己微信上的账号         | 微信账号                                             | 必填       （wx_account和nick_name）二选一 |
+| nick_name        | 自己微信上的名字         | 微信昵称，自己微信改的名字                           | 必填       （wx_account和nick_name）二选一 |
+| remark           | 做转发的微信备注         | 发送微信备注的名字，可用此名字作为群发条件           | 选填       |
+| timestamp        | 16565655                | 时间戳                                               | 必填       |
+| talk.type        | 1                       | 发送数据的类型：1, 2, 3                              | 必填       |
+| talk.msg         | test                    | 发送的内容                                           | 根据参数选填 |
+| talk.card_title  | Hello_Wechat           | 卡片式内容的简短名字                                   | 根据参数选填 |
+| talk.card_desc   | Hello                   | 卡片式内容的简单描述                                   | 根据参数选填 |
+| talk.card_image_url | www.baidu.com        | 卡片式内容的图片地址（确保是正确的URL）               | 根据参数选填 |
+| talk.card_link_url | www.baidu.com         | 卡片式内容的跳转地址（确保是正确的URL）               | 根据参数选填 |
+| type4Picname     | 图片名字                | 卡片式内容的跳转地址（确保是正确的URL）               | 根据参数选填 |
 
 - 服务器默认订阅地址为：/WeChatMqtt/Allmsg
 
 
 
+<br>
 
-
-## 微信发送数据到其他地方
+# **微信发送数据到其他地方**
 
 用户聊天界面输入内容：
 
 有两种数据格式：
 1. 第一种快速回复
 ```
-    直接输入字符串，默认字符串。这个字符串会发送到 mqtt_id_name_bindMe = 1对应的mqtt_id topic上。只能发送一个人。
+    直接输入字符串（图片数据默认也是base64字符串），默认字符串。这个字符串会发送到对应的mqtt_id上。
 ```
 
-1. 第二种是多功能模式，不仅能回复，还能回复其他数据
-微信只能发送2中数据，一种是文件，一种是图片。但是可以发给不同的人
-```str
-发送文字的协议：
-1-mqtt_id_name-(发送的内容)
-发送图片的协议
-直接发送图片，微信A会返回你对应的地址
-2-mqtt_id_name-(地址)
-3-mqtt_id_name
+1. 第二种是根据协议，可以发送数据给其他mqtt_id客户端（以下方式暂时没完成）
+```json
+1. 文字
+{
+    "mqtt_id": "自定义", // 微信返回数据是根据这个字符串
+    "wx_account": "", //微信账号
+    "nick_name": "", // 微信昵称，自己微信改的名字
+    "remark": "", // 发送微信备注的名字，可用此名字作为群发条件
+    "timestamp": 16565655, // 时间戳    "talk": 
+    {
+        "type": 1, // 发送数据的类型：1, 2, 3
+        "msg": "test", // 发送的内容
+    }
+}
+
+2. 发送图片
+先发送文字，"上传图片"
+然后会返回图片的图床url
+最后发送下面协议即可
+{
+    "mqtt_id": "自定义", // 微信返回数据是根据这个字符串
+    "wx_account": "", //微信账号
+    "nick_name": "", // 微信昵称，自己微信改的名字
+    "remark": "", // 发送微信备注的名字，可用此名字作为群发条件
+    "timestamp": 16565655, // 时间戳    "talk": 
+    {
+        "type": 2, // 发送数据的类型：1, 2, 3
+        "msg": url, // 发送的内容
+    }
+}
 
 ```
 
 
 
-## 测试数据包
+# **测试数据包**
 
 
 - **mqtt客户端发送数据包到微信的测试代码，测试代码中填写自己的 mqtt_id , wx_account就可以使用测试了**
@@ -124,7 +151,6 @@
 // wx_account nick_name 这两个其中一个必填
 {
     "mqtt_id": "",
-    "mqtt_id_name":"",
     "wx_account": "", 
     "nick_name": "",
     "remark": "",
@@ -145,7 +171,6 @@
 ```json
 {
     "mqtt_id": "",
-    "mqtt_id_name":"",
     "wx_account": "", 
     "nick_name": "",
     "remark": "",
@@ -166,7 +191,6 @@
 ```json
 {
     "mqtt_id": "",
-    "mqtt_id_name":"",
     "wx_account": "", 
     "nick_name": "",
     "remark": "",
@@ -187,7 +211,6 @@
 ```json
 {
     "mqtt_id": "",
-    "mqtt_id_name":"",
     "wx_account": "", 
     "nick_name": "",
     "remark": "",
@@ -210,13 +233,14 @@ import base64
 import json
 
 # MQTT Broker 地址和端口
-broker = ''
-port = 
+broker = 'broker-cn.emqx.io'
+#broker = '172.245.129.232'
+port = 1883
 
 topic = "/WeChatMqtt/Allmsg"
 
 # 图片文件路径
-image_file_path = "61975c202c2c01899.jpg"
+image_file_path = "2.png"
 
 # 读取图片并进行 Base64 编码
 with open(image_file_path, "rb") as image_file:
@@ -226,7 +250,6 @@ with open(image_file_path, "rb") as image_file:
 # Create the JSON message with image data in the "msg" field
 message_data = {
     "mqtt_id": "123123",
-    "mqtt_id_name":"",
     "wx_account": "",
     "nick_name": "",
     "remark": "",
@@ -238,8 +261,8 @@ message_data = {
         "card_desc": "Hello",
         "card_image_url": "www.baidu.com",
         "card_link_url": "www.baidu.com",
-        "type4Picname": "666.jpg"
-    }
+        "type4Picname": image_file_path  # 必须和你的图片名字一样
+    } 
 }
 
 # Convert the JSON message to a string
@@ -252,15 +275,15 @@ client = mqtt.Client()
 client.on_publish = on_publish
 
 # Set username and password
-client.username_pw_set("lisiniot", "lisiniot@0801#1657")
+client.username_pw_set("", "") #有账号密码的添加在这里
 
 client.connect(broker, port, 60)
 
+print(json_message)
 # Publish the JSON message with image data to the MQTT topic
 client.publish(topic, json_message)
 
 client.loop_forever()
-
 ```
 5. type:5,获取所有用户wx_account
 ```
@@ -268,6 +291,7 @@ client.loop_forever()
 ```
 
 - **微信发送数据到mqtt客户端，测试代码中填写自己的 mqtt_id , mqtt_id_name， wx_account就可以使用测试了**
+
 1. 快速回复模式
 ```
 微信好友 
@@ -275,16 +299,5 @@ client.loop_forever()
 
 2. 协议回复模式
 ```
-发送文字的协议：
-1-mqtt_id_name-(发送的内容)
-1-
-
-
-发送图片的协议
-直接发送图片，微信A会返回你对应的地址
-2-mqtt_id_name-(地址)
-3-mqtt_id_name
-
-
-
+发送文字和图片
 ```

@@ -62,7 +62,7 @@
 
 ## **使用教程**
 1. 打开config.json,修改为自己对应的mqtt服务器,账号密码没有可以不填。subscribetopic，之后客户端的消息都会发送到这个topic
-(免费mqtt服务器)[https://www.lddgo.net/network/mqttlist]
+(免费mqtt服务器)[https://www.lddgo.net/network/mqttlist],[客户端在线测试](http://www.emqx.io/online-mqtt-client/#/recent_connections/0?oper=create)
 ```
 {
     "broker": "broker-cn.emqx.io",
