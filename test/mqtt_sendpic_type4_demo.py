@@ -20,8 +20,8 @@ with open(image_file_path, "rb") as image_file:
 # Create the JSON message with image data in the "msg" field
 message_data = {
     "mqtt_id": "123123",
-    "wx_account": "a502969366",
-    "nick_name": "方镇杰",
+    "wx_account": "",
+    "nick_name": "",
     "remark": "",
     "timestamp": 16565655,
     "talk": {
