@@ -37,6 +37,7 @@
 - [**使用前准备**](#使用前准备)
 - [**使用教程**](#使用教程)
 - [**对接协议**](#对接协议)
+- [**联系方式**](#联系方式)
 - [**声明**](#声明)
 
 ## **简介**
@@ -60,24 +61,23 @@
 
 
 ## **使用教程**
-1. 打开config.json,修改为自己对应的mqtt服务器,账号密码没有可以不填。subscribetopic，之后客户端的消息都会发送到这个topic
-(免费mqtt服务器)[https://www.lddgo.net/network/mqttlist],[客户端在线测试](http://www.emqx.io/online-mqtt-client/#/recent_connections/0?oper=create)
-```
-{
-    "broker": "broker-cn.emqx.io",
-    "port": 1883,
-    "user": "",
-    "pw": "",
-    "keepalive": 60,    
-    "subscribetopic": "/WeChatMqtt/Allmsg"
-}
-```
-2. 安装Wechat_Mqtt后打开程序
-3. 扫码登录自己微信即可使用
-
+1. 安装好微信版本：3.6.0.18
+2. 安装Releases中提供的安装包，打开安装后的程序按照提示登录微信就能够使用了
+3. [免费mqtt服务器](https://www.lddgo.net/network/mqttlist),已经配置在config.json当中
+4. [mqtt客户端在线测试](http://www.emqx.io/online-mqtt-client/#/recent_connections/0?oper=create)，可用于测试指令
+5. test中提供测试的python代码
 
 ## **对接协议**
+以下是mqtt指令对接微信文档
+
 [对接协议](./doc.md)
+
+
+## **联系方式**
+qq: 502969366
+tg: https://t.me/f0x15
+关注 **微信公众号** 获取安装密码, 发送 jkxf01 获取安装密码
+![微信公众号](./test/1.jpg)
 
 
 
