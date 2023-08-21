@@ -1,3 +1,11 @@
+<!--
+ * @Author: 极客小方 GeekFong@hotmail.com
+ * @Date: 2023-08-17 09:04:27
+ * @LastEditors: 极客小方 GeekFong@hotmail.com
+ * @LastEditTime: 2023-08-21 10:27:20
+ * @FilePath: \Wechat_Mqtt\README.md
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 **<h1 style="text-align: center;">Wechat_Mqtt</h1>**
 
 <div style="display: flex; justify-content: center;">
@@ -74,9 +82,9 @@
 
 
 ## **联系方式**
-qq: 502969366
-tg: https://t.me/f0x15
-关注 **微信公众号** 获取安装密码, 发送 jkxf01 获取安装密码
+- qq: 502969366
+- tg: https://t.me/f0x15
+- 关注 **微信公众号** 获取安装密码, 发送 jkxf01 获取安装密码
 ![微信公众号](./test/1.jpg)
 
 
