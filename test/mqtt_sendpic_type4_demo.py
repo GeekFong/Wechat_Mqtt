@@ -4,7 +4,6 @@ import json
 
 # MQTT Broker 地址和端口
 broker = 'broker-cn.emqx.io'
-#broker = '172.245.129.232'
 port = 1883
 
 topic = "/WeChatMqtt/Allmsg"
